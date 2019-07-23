@@ -56,9 +56,18 @@ func (pair *OrderedPair) Equal(other OrderedPair) bool {
 }
 
 func (set *threadUnsafeSet) Add(i interface{}) bool {
-	_, found := (*set)[i]
-	if found {
-		return false //False if it existed already
+	switch i.(type) {
+	case Set:
+		for v := range set.Iter() {
+			if v.(Set).Equal(i.(Set)) {
+				return false //False if it existed already
+			}
+		}
+	default:
+		_, found := (*set)[i]
+		if found {
+			return false //False if it existed already
+		}
 	}
 
 	(*set)[i] = struct{}{}
