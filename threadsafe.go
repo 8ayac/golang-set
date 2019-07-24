@@ -43,9 +43,9 @@ func (set *threadSafeSet) Add(i interface{}) bool {
 	return ret
 }
 
-func (set *threadSafeSet) Contains(i ...interface{}) bool {
+func (set *threadSafeSet) Contains(i interface{}) bool {
 	set.RLock()
-	ret := set.s.Contains(i...)
+	ret := set.s.Contains(i)
 	set.RUnlock()
 	return ret
 }

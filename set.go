@@ -54,9 +54,8 @@ type Set interface {
 	// implementation, duplicating all keys.
 	Clone() Set
 
-	// Returns whether the given items
-	// are all in the set.
-	Contains(i ...interface{}) bool
+	// Returns whether the given item is in set.
+	Contains(i interface{}) bool
 
 	// Returns the difference between this set
 	// and other. The returned set will contain

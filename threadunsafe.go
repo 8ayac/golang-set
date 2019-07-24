@@ -74,9 +74,16 @@ func (set *threadUnsafeSet) Add(i interface{}) bool {
 	return true
 }
 
-func (set *threadUnsafeSet) Contains(i ...interface{}) bool {
-	for _, val := range i {
-		if _, ok := (*set)[val]; !ok {
+func (set *threadUnsafeSet) Contains(i interface{}) bool {
+	switch i.(type) {
+	case Set:
+		for v := range set.Iter() {
+			if !v.(Set).Equal(i.(Set)) {
+				return false //False if it is not contained
+			}
+		}
+	default:
+		if _, ok := (*set)[i]; !ok {
 			return false
 		}
 	}
