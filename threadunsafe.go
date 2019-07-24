@@ -78,16 +78,17 @@ func (set *threadUnsafeSet) Contains(i interface{}) bool {
 	switch i.(type) {
 	case Set:
 		for v := range set.Iter() {
-			if !v.(Set).Equal(i.(Set)) {
-				return false //False if it is not contained
+			if v.(Set).Equal(i.(Set)) {
+				return true
 			}
 		}
+		return false
 	default:
 		if _, ok := (*set)[i]; !ok {
 			return false
 		}
+		return true
 	}
-	return true
 }
 
 func (set *threadUnsafeSet) IsSubset(other Set) bool {
