@@ -200,30 +200,6 @@ func Test_ContainsUnsafeSet(t *testing.T) {
 	}
 }
 
-func Test_ContainsMultipleSet(t *testing.T) {
-	a := makeSet([]int{8, 6, 7, 5, 3, 0, 9})
-
-	if !a.Contains(8, 6, 7, 5, 3, 0, 9) {
-		t.Error("ContainsAll should contain Jenny's phone number")
-	}
-
-	if a.Contains(8, 6, 11, 5, 3, 0, 9) {
-		t.Error("ContainsAll should not have all of these numbers")
-	}
-}
-
-func Test_ContainsMultipleUnsafeSet(t *testing.T) {
-	a := makeUnsafeSet([]int{8, 6, 7, 5, 3, 0, 9})
-
-	if !a.Contains(8, 6, 7, 5, 3, 0, 9) {
-		t.Error("ContainsAll should contain Jenny's phone number")
-	}
-
-	if a.Contains(8, 6, 11, 5, 3, 0, 9) {
-		t.Error("ContainsAll should not have all of these numbers")
-	}
-}
-
 func Test_ClearSet(t *testing.T) {
 	a := makeSet([]int{2, 5, 9, 10})
 
@@ -990,8 +966,10 @@ func Test_PopSafe(t *testing.T) {
 		t.Error("unepxected a cardinality; should be zero")
 	}
 
-	if !captureSet.Contains("c", "a", "d", "b") {
-		t.Error("unexpected result set; should be a,b,c,d (any order is fine")
+	for _, v := range []string{"c", "a", "d", "b"} {
+		if !captureSet.Contains(v) {
+			t.Error("unexpected result set; should be a,b,c,d (any order is fine")
+		}
 	}
 
 	if finalNil != nil {
@@ -1022,8 +1000,10 @@ func Test_PopUnsafe(t *testing.T) {
 		t.Error("unepxected a cardinality; should be zero")
 	}
 
-	if !captureSet.Contains("c", "a", "d", "b") {
-		t.Error("unexpected result set; should be a,b,c,d (any order is fine")
+	for _, v := range []string{"c", "a", "d", "b"} {
+		if !captureSet.Contains(v) {
+			t.Error("unexpected result set; should be a,b,c,d (any order is fine")
+		}
 	}
 
 	if finalNil != nil {

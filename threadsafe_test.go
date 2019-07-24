@@ -130,21 +130,14 @@ func Test_ContainsConcurrent(t *testing.T) {
 	runtime.GOMAXPROCS(2)
 
 	s := NewSet()
-	ints := rand.Perm(N)
-	interfaces := make([]interface{}, 0)
-	for _, v := range ints {
-		s.Add(v)
-		interfaces = append(interfaces, v)
-	}
+	i := 1
 
 	var wg sync.WaitGroup
-	for range ints {
-		wg.Add(1)
-		go func() {
-			s.Contains(interfaces...)
-			wg.Done()
-		}()
-	}
+	wg.Add(1)
+	go func() {
+		s.Contains(i)
+		wg.Done()
+	}()
 	wg.Wait()
 }
 

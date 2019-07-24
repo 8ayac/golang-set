@@ -123,16 +123,11 @@ func BenchmarkClone100Unsafe(b *testing.B) {
 }
 
 func benchContains(b *testing.B, n int, s Set) {
-	nums := toInterfaces(nrand(n))
-	for _, v := range nums {
-		s.Add(v)
-	}
-
-	nums[n-1] = -1 // Definitely not in s
+	nums := nrand(n)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		s.Contains(nums...)
+		s.Contains(nums)
 	}
 }
 
