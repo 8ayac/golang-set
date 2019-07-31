@@ -44,7 +44,7 @@ type Set interface {
 	Add(i interface{}) bool
 
 	// Returns the number of elements in the set.
-	Cardinality() int
+	N() int
 
 	// Removes all elements from the set, leaving
 	// the empty set.

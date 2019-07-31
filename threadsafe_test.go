@@ -67,9 +67,9 @@ func Test_CardinalityConcurrent(t *testing.T) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		elems := s.Cardinality()
+		elems := s.N()
 		for i := 0; i < N; i++ {
-			newElems := s.Cardinality()
+			newElems := s.N()
 			if newElems < elems {
 				t.Errorf("Cardinality shrunk from %v to %v", elems, newElems)
 			}
@@ -369,8 +369,8 @@ func Test_RemoveConcurrent(t *testing.T) {
 	}
 	wg.Wait()
 
-	if s.Cardinality() != 0 {
-		t.Errorf("Expected cardinality 0; got %v", s.Cardinality())
+	if s.N() != 0 {
+		t.Errorf("Expected cardinality 0; got %v", s.N())
 	}
 }
 
@@ -432,7 +432,7 @@ func Test_ToSlice(t *testing.T) {
 
 	wg.Wait()
 	setAsSlice := s.ToSlice()
-	if len(setAsSlice) != s.Cardinality() {
+	if len(setAsSlice) != s.N() {
 		t.Errorf("Set length is incorrect: %v", len(setAsSlice))
 	}
 

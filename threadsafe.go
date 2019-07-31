@@ -145,7 +145,7 @@ func (set *threadSafeSet) Remove(i interface{}) {
 	set.Unlock()
 }
 
-func (set *threadSafeSet) Cardinality() int {
+func (set *threadSafeSet) N() int {
 	set.RLock()
 	defer set.RUnlock()
 	return len(set.s)
@@ -257,7 +257,7 @@ func (set *threadSafeSet) CartesianProduct(other Set) Set {
 }
 
 func (set *threadSafeSet) ToSlice() []interface{} {
-	keys := make([]interface{}, 0, set.Cardinality())
+	keys := make([]interface{}, 0, set.N())
 	set.RLock()
 	for elem := range set.s {
 		keys = append(keys, elem)

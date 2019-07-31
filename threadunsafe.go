@@ -93,7 +93,7 @@ func (set *threadUnsafeSet) Contains(i interface{}) bool {
 
 func (set *threadUnsafeSet) IsSubset(other Set) bool {
 	_ = other.(*threadUnsafeSet)
-	if set.Cardinality() > other.Cardinality() {
+	if set.N() > other.N() {
 		return false
 	}
 	for elem := range *set {
@@ -135,7 +135,7 @@ func (set *threadUnsafeSet) Intersect(other Set) Set {
 
 	intersection := newThreadUnsafeSet()
 	// loop over smaller set
-	if set.Cardinality() < other.Cardinality() {
+	if set.N() < other.N() {
 		for elem := range *set {
 			if other.Contains(elem) {
 				intersection.Add(elem)
@@ -179,7 +179,7 @@ func (set *threadUnsafeSet) Remove(i interface{}) {
 	delete(*set, i)
 }
 
-func (set *threadUnsafeSet) Cardinality() int {
+func (set *threadUnsafeSet) N() int {
 	return len(*set)
 }
 
@@ -224,7 +224,7 @@ func (set *threadUnsafeSet) Iterator() *Iterator {
 func (set *threadUnsafeSet) Equal(other Set) bool {
 	_ = other.(*threadUnsafeSet)
 
-	if set.Cardinality() != other.Cardinality() {
+	if set.N() != other.N() {
 		return false
 	}
 	for elem := range *set {
@@ -308,7 +308,7 @@ func (set *threadUnsafeSet) CartesianProduct(other Set) Set {
 }
 
 func (set *threadUnsafeSet) ToSlice() []interface{} {
-	keys := make([]interface{}, 0, set.Cardinality())
+	keys := make([]interface{}, 0, set.N())
 	for elem := range *set {
 		keys = append(keys, elem)
 	}
@@ -318,7 +318,7 @@ func (set *threadUnsafeSet) ToSlice() []interface{} {
 
 // MarshalJSON creates a JSON array from the set, it marshals all elements
 func (set *threadUnsafeSet) MarshalJSON() ([]byte, error) {
-	items := make([]string, 0, set.Cardinality())
+	items := make([]string, 0, set.N())
 
 	for elem := range *set {
 		b, err := json.Marshal(elem)

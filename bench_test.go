@@ -59,7 +59,7 @@ func BenchmarkRemoveUnsafe(b *testing.B) {
 
 func benchCardinality(b *testing.B, s Set) {
 	for i := 0; i < b.N; i++ {
-		s.Cardinality()
+		s.N()
 	}
 }
 
